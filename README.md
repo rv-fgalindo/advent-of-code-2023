@@ -16,3 +16,6 @@ This repo is meant to be a central place for our solutions and allow for colabor
    - `name/dayAndPart.js` OR
    - `name/day/part.js`
 5. Feel free to commit changes to your folder as you wish.
+
+## Tavio
+Imma be using Python, since it's my bnb. But I might mix in some Typescript in there if I'm feeling myself.
