@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bufio"
+	"aoc/utilities"
 	"fmt"
-	"os"
 	"strconv"
 )
 
@@ -20,35 +19,16 @@ func Part1(){
 	// how to get a specific char of a string (but is unicode value)
 	// // fmt.Println(string(msg[1]))
 	// return
-
-	// Open the file
-	file, err := os.Open("input.txt")
+	
+	path := "input.txt"
+	lines, err := utilities.LoadFile(path)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
 	}
-	defer file.Close()
-
-	// Create a scanner to read the file
-	scanner := bufio.NewScanner(file)
-
-	// Create a slice to hold the lines
-	var lines []string
-
-	// Iterate through each line in the file
-	for scanner.Scan() {
-		line := scanner.Text()
-		lines = append(lines, line)
-	}
-
-	// Check for any errors that may have occurred during scanning
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
 
 	// Print the lines or use them as needed
-	fmt.Println("Lines in the file:")
+	// fmt.Println("Lines in the file:")
 	// fmt.Printf("index 0\n%v", lines[0])
 	for i, line := range lines {
 		first := "temp"
@@ -61,7 +41,9 @@ func Part1(){
 				if first == "temp" {
 					first = char
 				}
-				fmt.Printf("Successfully converted '%v' to integer: %d\n", char, intValue)
+				// below line is to trick the compiler into thinking we are using the variable but only using in commented out print statement below
+				_ = intValue
+				// fmt.Printf("Successfully converted '%v' to integer: %d\n", char, intValue)
 			}
 		}
 		// uncomment line below to see each iteration
@@ -80,7 +62,7 @@ func Part1(){
 			fmt.Println("Error on line ", i, err)
 		}
 	}
-	fmt.Printf("\n\nPart 1 Final Value: %v\n", sum)
+	fmt.Printf("Part 1 Final Value: %v\n\n", sum)
 }
 
 func Part2(){
@@ -91,28 +73,10 @@ func Part2(){
 	// return
 
 	// Open the file
-	file, err := os.Open("input.txt")
+	path := "input.txt"
+	lines, err := utilities.LoadFile(path)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
-		return
-	}
-	defer file.Close()
-
-	// Create a scanner to read the file
-	scanner := bufio.NewScanner(file)
-
-	// Create a slice to hold the lines
-	var lines []string
-
-	// Iterate through each line in the file
-	for scanner.Scan() {
-		line := scanner.Text()
-		lines = append(lines, line)
-	}
-
-	// Check for any errors that may have occurred during scanning
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
 		return
 	}
 	
@@ -131,7 +95,9 @@ func Part2(){
 				if first == "temp" {
 					first = char
 				}
-				fmt.Printf("Successfully converted '%v' to integer: %d\n", char, intValue)
+				// below line is to trick the compiler into thinking we are using the variable but only using in commented out print statement below
+				_ = intValue
+				// fmt.Printf("Successfully converted '%v' to integer: %d\n", char, intValue)
 			} else if length - index >= 3 {
 				// create a substring for the next 3 chars 
 				possibleDigit := line[index:index+3]
@@ -140,15 +106,15 @@ func Part2(){
 				switch possibleDigit {
 					// if match, update first and last accordingly
 					case "one":
-						fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+						// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 						last = "1"
 						if first == "temp" {first = "1"}
 					case "two":
-						fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+						// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 						last = "2"
 						if first == "temp" {first = "2"}
 					case "six":
-						fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+						// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 						last = "6"
 						if first == "temp" {first = "6"}
 				}		
@@ -161,15 +127,15 @@ func Part2(){
 					switch possibleDigit {
 						// if match, update first and last accordingly
 						case "four":
-							fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+							// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 							last = "4"
 							if first == "temp" {first = "4"}
 						case "five":
-							fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+							// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 							last = "5"
 							if first == "temp" {first = "5"}
 						case "nine":
-							fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+							// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 							last = "9"
 							if first == "temp" {first = "9"}
 					}
@@ -180,15 +146,15 @@ func Part2(){
 						switch possibleDigit {
 							// if match, update first and last accordingly
 							case "three":
-								fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+								// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 								last = "3"
 								if first == "temp" {first = "3"}
 							case "seven":
-								fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+								// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 								last = "7"
 								if first == "temp" {first = "7"}
 							case "eight":
-								fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
+								// fmt.Printf("Match Found!\nIteration %v\nLine %v\nPossibleDigit %v\n", i, line, possibleDigit)
 								last = "8"
 								if first == "temp" {first = "8"}
 						}
@@ -201,7 +167,7 @@ func Part2(){
 		
 		// because go is pass by value, we need to update the original slice and not line (which is a copy of the element)
 		lines[i] = first + last
-		fmt.Printf("\n\nUpdating Lines[i]!\nLine %v\nFirst %v\nLast %v\n\n", line, first, last)
+		// fmt.Printf("\n\nUpdating Lines[i]!\nLine %v\nFirst %v\nLast %v\n\n", line, first, last)
 		// line = first + last
 	}
 	// tracking sum
@@ -213,5 +179,5 @@ func Part2(){
 			fmt.Println("Error on line ", i, err)
 		}
 	}
-	fmt.Printf("\n\nPart 2 Final Value: %v\n", sum)
+	fmt.Printf("Part 2 Final Value: %v\n", sum)
 }
