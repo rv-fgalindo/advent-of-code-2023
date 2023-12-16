@@ -13,16 +13,8 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	part1(games, false)
-	
-	
-	// fmt.Printf("Game 1:%v\n", strings.Trim(strings.Split(games[0],": ")[1], " "))
-
-	// Part 1
-	// fmt.Println("Part 1: ", part1(input))
-
-	// Part 2
-	// fmt.Println("Part 2: ", part2(input))
+	// part1(games, false)
+	part2(games, false)
 }
 
 func part1(games []string, debug bool) {
@@ -42,17 +34,19 @@ func part1(games []string, debug bool) {
 		winnersMap := make(map[string]bool)
 		for _, winner := range winners {
 			// want to disregard spaces
-			if winner == " " {
+			// spaces werent the issue; it was the empty strings
+			if winner == " " || winner == "" {
 				continue
 			}
-			winnersMap[winner] = true
+			winnersMap[winner] = false
 		}
 		for _, num := range numsHave {
-			if num == " " {
+			if num == " " || num == "" {
 				continue
 			}
 			if _, ok := winnersMap[num]; ok {
 				if debug{fmt.Printf("Match Found Num:%v\n", num)}
+				winnersMap[num] = true
 				matches++
 			}
 		}
@@ -61,4 +55,60 @@ func part1(games []string, debug bool) {
 		}
 	}
 	fmt.Printf("Total Points:%v\n", points)
+}
+
+func part2(games []string, debug bool) {
+	fmt.Println("Running Part 2")
+	points := 0
+	gameTracker := make(map[int]int)
+	for i := range games {
+		// add i to gameTracker map with value of 1
+		gameTracker[i] = 1
+	}
+	for i, game := range games {
+		matches := 0
+		winners := strings.Split(strings.Trim(strings.Split(strings.Trim(strings.Split(game,": ")[1], " "), "|")[0]," "), " ")
+		numsHave := strings.Split(strings.Trim(strings.Split(strings.Trim(strings.Split(game,": ")[1], " "), "|")[1]," "), " ")
+		if debug{
+			fmt.Printf("Winners:%v\n", winners)
+			fmt.Printf("Nums Have:%v\nlength %v\n", numsHave, len(numsHave))
+		}
+		
+		winnersMap := make(map[string]bool)
+		for _, winner := range winners {
+			// want to disregard spaces
+			// spaces werent the issue; it was the empty strings
+			if winner == " " || winner == "" {
+				continue
+			}
+			winnersMap[winner] = false
+		}
+		for _, num := range numsHave {
+			if num == " " || num == "" {
+				continue
+			}
+			if _, ok := winnersMap[num]; ok {
+				if debug{fmt.Printf("Match Found Num:%v\n", num)}
+				winnersMap[num] = true
+				matches++
+			}
+		}
+		if matches > 0 {
+			multiplyCards(i, matches, gameTracker)
+		}
+	}
+	for _, v := range gameTracker {
+		points += v
+	}
+	fmt.Printf("Total Points:%v\n", points)
+}
+
+func multiplyCards(currentWinner int, cardsWon int, gameTracker map[int]int) {
+	
+	multiplier := gameTracker[currentWinner]
+	for i := 0; i < cardsWon; i++ {
+		cardWon := currentWinner + i+1
+		gameTracker[cardWon]= gameTracker[cardWon] + (1 * multiplier)
+	}
+	
 }
